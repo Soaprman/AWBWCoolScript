@@ -1,0 +1,14 @@
+{
+  "name": "awbw2",
+  "version": "2.0.0",
+  "description": "Userscript for Advance Wars By Web",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  }
+}
