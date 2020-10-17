@@ -1,15 +1,3 @@
-// ==UserScript==
-// @name         AWBW Cool Script
-// @namespace    http://tampermonkey.net/
-// @version      1.1.4
-// @description  Adds a new layout for 4K support, crispy zooming, embedding CO music, and maybe more
-// @author       Soaprman
-// @match        https://awbw.amarriner.com/*
-// @icon         https://thedailypos.org/misc/awtank.png
-// @require		 https://code.jquery.com/jquery-3.5.1.min.js
-// @grant        none
-// ==/UserScript==
-
 const config = require('./config');
 
 (function() {
