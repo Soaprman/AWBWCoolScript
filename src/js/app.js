@@ -73,26 +73,6 @@ const config = require('./config');
 			{name: 'vonbolt', youtubeUrl: 'https://www.youtube.com/watch?v=VUU3JAwsxes#t=0', portraitIndex: 26, costumeIndex: 2},
 		];
 	}
-	
-	/* ================================================================================
-	Changelog
-	-----------------------------------------------------------------------------------
-	1.1.4 - October 16, 2020
-		* Fix layout change not working on game replay pages
-		* KNOWN ISSUE 1: Does not and has never worked with move planner - didn't know that's a thing!
-		* KNOWN ISSUE 2: Player data has horizontal scrollbar when viewing replay moves. Need to adjust columns or something
-	1.1.3 - October 16, 2020
-		* Fix error when running script on game replay pages
-	1.1.2 - October 7, 2020
-		* Updated many CO songs to the AWDS versions
-	1.1.1 - September 23, 2020
-		* Updated Flak's theme to a better version
-	1.1.0 - September 20, 2020
-		* Added a changelog to this file :)
-		* Changed youtube music from an embed to a link because the embed has issues with page reloads
-		* Made spritesheet URL configurable
-		* Fixed lots of issues with portrait displays
-	================================================================================ */
 
 	// ================================================================================
 	// Embed youtube music or link for active CO's theme

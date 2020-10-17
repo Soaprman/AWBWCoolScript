@@ -10,7 +10,8 @@ const sass = require('gulp-sass');
 const browserify = require('browserify');
 
 // Custom stuff
-const applyUserscriptHeader = require('./transforms/applyUserscriptHeader');
+const prependChangelog = require('./transforms/prependChangelog');
+const prependUserscriptHeader = require('./transforms/prependUserscriptHeader');
 
 sass.compiler = require('node-sass');
 
@@ -31,7 +32,8 @@ gulp.task('scripts', function () {
     return browserify('./src/js/app.js')
         .bundle()
         .pipe(stream('bundle.js'))
-        .pipe(transform('utf8', applyUserscriptHeader))
+        .pipe(transform('utf8', prependChangelog))
+        .pipe(transform('utf8', prependUserscriptHeader))
         .pipe(gulp.dest('output'));
 });
 

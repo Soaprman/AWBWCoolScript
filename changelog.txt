@@ -1,5 +1,5 @@
-2.0.0 - October 16, 2020
-    * Add config panel and store config in browser local storage
+2.0.0 - October 17, 2020
+    * Create a fancy development enviornment and overhaul how the script is built
 1.1.4 - October 16, 2020
     * Fix layout change not working on game replay pages
     * KNOWN ISSUE 1: Does not and has never worked with move planner - didn't know that's a thing!
