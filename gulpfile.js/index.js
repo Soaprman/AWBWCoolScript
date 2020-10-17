@@ -28,10 +28,10 @@ gulp.task('sass:watch', function () {
 gulp.task('styles', gulp.series('sass'));
 
 
-gulp.task('scripts', function () {
-    return browserify('./src/js/app.js')
+gulp.task('buildThickScript', function () {
+    return browserify('./src/js/thick.js')
         .bundle()
-        .pipe(stream('bundle.js'))
+        .pipe(stream('AWBWCoolScript-Thick.js'))
         .pipe(transform('utf8', prependChangelog))
         .pipe(transform('utf8', prependUserscriptHeader))
         .pipe(gulp.dest('output'));
@@ -39,5 +39,5 @@ gulp.task('scripts', function () {
 
 
 
-gulp.task('default', gulp.parallel('styles', 'scripts'));
+gulp.task('default', gulp.parallel('styles', 'buildThickScript'));
 
