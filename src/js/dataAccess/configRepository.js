@@ -5,7 +5,12 @@ function getConfig() {
     let config = readConfigFromStorage() || {};
 
     // Merge saved config into default config, to ensure new functionality gets added if not already present
-    return Object.assign(defaultConfig, config);
+    let mergedConfig = Object.assign(defaultConfig, config);
+
+    // Might want to move this out later once the config panel is done
+    writeConfigToStorage(mergedConfig);
+
+    return mergedConfig;
 }
 
 // Change costumeIndex if you want to.
