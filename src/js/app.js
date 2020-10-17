@@ -1,77 +1,12 @@
-const config = require('./config');
+const configRepository = require('./dataAccess/configRepository');
 
 (function() {
-    'use strict';
+	'use strict';
+	
+	let userConfig = configRepository.getConfig();
 
-	// ================================================================================
-	// Configuration
-	// --------------------------------------------------------------------------------
-	// Edit these values to toggle what features you want.
-	// ================================================================================
-
-    // Embed a link to open the active CO's theme in a new tab.
-    const EMBED_MUSIC_LINK = true;
-
-	// Embed a youtube containing the CO's theme. Does not autoplay.
-    // Is icky with page reloads while taking your turn, so maybe don't use it. I might remove it in the future.
-	const EMBED_MUSIC_VIDEO = false;
-
-	// Move player info to the left side of the screen, and expand the overall layout to fit the window better.
-	const REARRANGE_LAYOUT = true;
-
-    // For those without gigantic monitors, make some concessions if rearranging the layout.
-    const REARRANGE_1080P_FRIENDLY = true;
-
-	// Use nearest neighbor for crispy pixels when zooming. Prevents blurriness.
-	const CRISPY_ZOOM = true;
-
-    // Use some alternate character portraits.
-    // Has issues on some pages - may be fixed in the future. We'll see!
-    const USE_ALTERNATE_PORTRAITS = true;
-
-	// The spritesheet to use for alternate character portraits.
-	const SPRITESHEET_URL = 'https://thedailypos.org/misc/awportraits.png';
-
-	// The max zoom factor - AWBW's default is 2.9 for some reason.
-	const MAX_ZOOM = 3.0;
-
-	// Change costumeIndex if you want to.
-	// 0 = Default
-	// 1 = Japanese default (Olaf, Grit, Sonja only)
-	// 2 = Alternate (everyone but Sturm)
-	// 3 = Japanese alternate (Olaf, Sonja only)
-	// Spritesheet is at https://thedailypos.org/misc/awportraits.png if you want to see them
 	function getCoData() {
-		return [
-			{name: 'andy', youtubeUrl: 'https://www.youtube.com/watch?v=JdRuVBhZuGY#t=0', portraitIndex: 4, costumeIndex: 2},
-			{name: 'hachi', youtubeUrl: 'https://www.youtube.com/watch?v=Q7jTW7Ks9Yw#t=0', portraitIndex: 3, costumeIndex: 2},
-			{name: 'jake', youtubeUrl: 'https://www.youtube.com/watch?v=T8lEWH5WBfY#t=0', portraitIndex: 0, costumeIndex: 2},
-			{name: 'max', youtubeUrl: 'https://www.youtube.com/watch?v=qgEr0qD6KGk#t=0', portraitIndex: 5, costumeIndex: 2},
-			{name: 'nell', youtubeUrl: 'https://www.youtube.com/watch?v=IjS68u0e88I#t=0', portraitIndex: 2, costumeIndex: 2},
-			{name: 'rachel', youtubeUrl: 'https://www.youtube.com/watch?v=y80cfL409Xg#t=0', portraitIndex: 1, costumeIndex: 2},
-			{name: 'sami', youtubeUrl: 'https://www.youtube.com/watch?v=xfD4V4C3mY0&t=4', portraitIndex: 6, costumeIndex: 2},
-			{name: 'colin', youtubeUrl: 'https://www.youtube.com/watch?v=Eof8PesukfI#t=0', portraitIndex: 9, costumeIndex: 2},
-			{name: 'grit', youtubeUrl: 'https://www.youtube.com/watch?v=Y70XddToyqY#t=0', portraitIndex: 8, costumeIndex: 2},
-			{name: 'olaf', youtubeUrl: 'https://www.youtube.com/watch?v=st4z_4xXLHs#t=0', portraitIndex: 7, costumeIndex: 2},
-			{name: 'sasha', youtubeUrl: 'https://www.youtube.com/watch?v=eJzp-w8Zuak#t=0', portraitIndex: 10, costumeIndex: 2},
-			{name: 'drake', youtubeUrl: 'https://www.youtube.com/watch?v=-Jgt_iIyNAc#t=0', portraitIndex: 12, costumeIndex: 2},
-			{name: 'eagle', youtubeUrl: 'https://www.youtube.com/watch?v=H01dbjPY7l0&t=5', portraitIndex: 11, costumeIndex: 2},
-			{name: 'javier', youtubeUrl: 'https://www.youtube.com/watch?v=4NQRJYAUXKg#t=0', portraitIndex: 14, costumeIndex: 2},
-			{name: 'jess', youtubeUrl: 'https://www.youtube.com/watch?v=uhEDNXhIbMY#t=0', portraitIndex: 13, costumeIndex: 2},
-			{name: 'grimm', youtubeUrl: 'https://www.youtube.com/watch?v=timyAe6limY#t=0', portraitIndex: 18, costumeIndex: 2},
-			{name: 'kanbei', youtubeUrl: 'https://www.youtube.com/watch?v=0Uo_AMfgQCQ&t=2', portraitIndex: 15, costumeIndex: 2},
-			{name: 'sensei', youtubeUrl: 'https://www.youtube.com/watch?v=ubDTOR5sbYc&t=4', portraitIndex: 17, costumeIndex: 2},
-			{name: 'sonja', youtubeUrl: 'https://www.youtube.com/watch?v=-vsVkNrHcJM&t=7', portraitIndex: 16, costumeIndex: 2},
-			{name: 'adder', youtubeUrl: 'https://www.youtube.com/watch?v=QT2l0m7YOEs#t=0', portraitIndex: 21, costumeIndex: 2},
-			{name: 'flak', youtubeUrl: 'https://www.youtube.com/watch?v=7u-2cjJpmKA#t=0', portraitIndex: 19, costumeIndex: 2},
-			{name: 'hawke', youtubeUrl: 'https://www.youtube.com/watch?v=4SSDJUr7Drw#t=0', portraitIndex: 22, costumeIndex: 2},
-			{name: 'jugger', youtubeUrl: 'https://www.youtube.com/watch?v=Y8mErMJNhlU#t=0', portraitIndex: 23, costumeIndex: 2},
-			{name: 'kindle', youtubeUrl: 'https://www.youtube.com/watch?v=tW3L4E__QS8#t=0', portraitIndex: 25, costumeIndex: 2},
-			{name: 'koal', youtubeUrl: 'https://www.youtube.com/watch?v=PKXuagNH3Yo#t=0', portraitIndex: 24, costumeIndex: 2},
-			{name: 'lash', youtubeUrl: 'https://www.youtube.com/watch?v=DW6P9UwWJ8k#t=0', portraitIndex: 20, costumeIndex: 2},
-			{name: 'sturm', youtubeUrl: 'https://www.youtube.com/watch?v=JsEnlbZunzE#t=0', portraitIndex: 27, costumeIndex: 0},
-			{name: 'vonbolt', youtubeUrl: 'https://www.youtube.com/watch?v=VUU3JAwsxes#t=0', portraitIndex: 26, costumeIndex: 2},
-		];
+		return userConfig.coData;
 	}
 
 	// ================================================================================
@@ -120,7 +55,7 @@ const config = require('./config');
 		let embedUrl = getYoutubeEmbedUrl(currentGameInfo.activeCoName);
 		let iframeHtml = getYoutubeIframeHtml(embedUrl);
 
-		if (REARRANGE_LAYOUT) {
+		if (userConfig.rearrangeLayout) {
 			$('<div class="youtube-embed__wrapper" style="position:fixed;">' + iframeHtml + '</div>').appendTo('#left-side-menu-fixed-wrapper');
 			repositionYoutubeEmbed();
 		} else {
@@ -142,7 +77,7 @@ const config = require('./config');
 
     function getYoutubeLinkHtml(linkUrl) {
 		const linkText = '&#119136; PLAY CO MUSIC IN NEW TAB &#119136;';
-		if (REARRANGE_LAYOUT) {
+		if (userConfig.rearrangeLayout) {
 			return '<div class="youtube-link__wrapper youtube-link__wrapper--fixed"><a target="_blank" href="' + linkUrl + '">' + linkText + '</a></div>';
 		} else {
 			return '<div class="youtube-link__wrapper"><a target="_blank" href="' + linkUrl + '">' + linkText + '</a></div>';
@@ -158,7 +93,7 @@ const config = require('./config');
 		let linkUrl = getYoutubeLinkUrl(currentGameInfo.activeCoName);
         let linkHtml = getYoutubeLinkHtml(linkUrl);
 
-		if (REARRANGE_LAYOUT) {
+		if (userConfig.rearrangeLayout) {
 			$(linkHtml).appendTo('#left-side-menu-fixed-wrapper');
 			repositionYoutubeLink();
 		} else {
@@ -171,11 +106,11 @@ const config = require('./config');
 		$('.youtube-link__wrapper').css('top', newTop + 'px');
 	}
 
-	if (EMBED_MUSIC_VIDEO) {
+	if (userConfig.embedMusicVideo) {
 		addActiveCoMusicVideoToPage();
 	}
 
-	if (EMBED_MUSIC_LINK) {
+	if (userConfig.embedMusicLink) {
 		addYoutubeStylesToPage();
 		addActiveCoMusicLinkToPage();
 	}
@@ -184,7 +119,7 @@ const config = require('./config');
 	// Zoom the map using nearest neighbor instead of... bilinear? Whatever it was before.
 	// ================================================================================
 
-	if (CRISPY_ZOOM) {
+	if (userConfig.crispyZoom) {
 		$('#gamemap').css('image-rendering', 'pixelated');
 	}
 
@@ -232,7 +167,7 @@ const config = require('./config');
 			'width': '550px'
 		});
 
-        if (REARRANGE_1080P_FRIENDLY) {
+        if (userConfig.rearrange1080pFriendly) {
             $('#game-player-info, #replay-player-info').css({
                 'max-height': '550px',
                 'overflow': 'auto'
@@ -247,15 +182,15 @@ const config = require('./config');
 
 		$('#game-footer').css('display', 'none');
 
-		if (EMBED_MUSIC_VIDEO) {
+		if (userConfig.embedMusicVideo) {
 			repositionYoutubeEmbed();
 		}
-		if (EMBED_MUSIC_LINK) {
+		if (userConfig.embedMusicLink) {
 			repositionYoutubeLink();
 		}
 	}
 
-	if (REARRANGE_LAYOUT) {
+	if (userConfig.rearrangeLayout) {
 		rearrangeLayout();
 	}
 
@@ -271,7 +206,7 @@ const config = require('./config');
 				display: inline-block;
 				border: 1px black solid;
 				margin: 2px 2px 2px 0;
-				background-image: url("${SPRITESHEET_URL}");
+				background-image: url("${userConfig.spritesheetUrl}");
 			}
 
 			.co-icon--small {
@@ -352,7 +287,7 @@ const config = require('./config');
         $('.calculator-toggle').on('click', applyAlternatePortraits);
     }
 
-    if (USE_ALTERNATE_PORTRAITS) {
+    if (userConfig.useAlternatePortraits) {
 		addPortraitStylesToPage();
         applyAlternatePortraits();
         resizePortraitWrappers();
@@ -362,17 +297,17 @@ const config = require('./config');
 	// Change the maximum zoom
 	// ================================================================================
 
-	if (REARRANGE_LAYOUT && currentlyOnGamePage()) {
+	if (userConfig.rearrangeLayout && currentlyOnGamePage()) {
 		// Overwrite this function to use the new max zoom value.
 		// Some variables, like this function itself, are global (i.e. attached to window).
 		window.scaleAdd = function(n) {
 			document.getElementById('outer').style.maxWidth = '1500px';
 
 			if (scale < 0.5 && n < 0) { return; } //do not allow to get too small
-			if (scale > MAX_ZOOM && n > 0) { return; } //do not allow to get too big
+			if (scale > userConfig.maxZoom && n > 0) { return; } //do not allow to get too big
 
 			scale += n; //increase scale
-			window.overdivScale = Math.min(scale, MAX_ZOOM / 2); // ~Soap
+			window.overdivScale = Math.min(scale, userConfig.maxZoom / 2); // ~Soap
 
 			if (typeof zoomLevel !== 'undefined') { // For replay.php
 				zoomLevel.textContent = scale.toFixed(1) + "x";
@@ -403,14 +338,14 @@ const config = require('./config');
 
 			localStorage.setItem("scale", scale);
 
-			if (REARRANGE_LAYOUT) {
+			if (userConfig.rearrangeLayout) {
 				// Force a rearrange to fix anything this zoom thingy breaks
 				rearrangeLayout();
 			}
 		};
 	}
 
-	if (REARRANGE_LAYOUT && currentlyOnGamePage()) {
+	if (userConfig.rearrangeLayout && currentlyOnGamePage()) {
 		// Force the layout changes
 		scaleAdd(0);
 	}
