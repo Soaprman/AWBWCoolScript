@@ -1,4 +1,8 @@
-exports.addStylesToPage = function (userConfig) {
+const configRepository = require('../../dataAccess/configRepository');
+
+exports.addStylesToPage = function () {
+    let userConfig = configRepository.getConfig();
+
     $(`<style>
 .youtube-link__wrapper {
     width: 530px;

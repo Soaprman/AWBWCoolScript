@@ -1,98 +1,22 @@
 const configRepository = require('./dataAccess/configRepository');
 const cssLoader = require('./loaders/thick/cssLoader');
+const gameDataHelper = require('./helpers/gameDataHelper');
+
+const youtubeModule = require('./modules/youtubeModule');
 
 (function() {
 	'use strict';
 	
 	let userConfig = configRepository.getConfig();
 
-	cssLoader.addStylesToPage(userConfig);
+	cssLoader.addStylesToPage();
 
 	function getCoData() {
 		return userConfig.coData;
 	}
 
-	// ================================================================================
-	// Embed youtube music or link for active CO's theme
-	// ================================================================================
-
-	// Youtube Embed
-	function getYoutubeEmbedUrl(coName) {
-		let coData = getCoData().find(data => data.name === coName);
-		return coData.youtubeUrl.replace(/watch\?v=/i, 'embed/');
-	}
-
-	function getYoutubeIframeHtml(embedUrl) {
-		return '<iframe width="540" height="100" src="' + embedUrl + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-	}
-
-	function addActiveCoMusicVideoToPage() {
-        if (!currentlyOnGamePage()) return;
-		let currentGameInfo = getCurrentGameInfo();
-		
-		if (!currentGameInfo.activeCoName) return;
-		
-		let embedUrl = getYoutubeEmbedUrl(currentGameInfo.activeCoName);
-		let iframeHtml = getYoutubeIframeHtml(embedUrl);
-
-		if (userConfig.rearrangeLayout) {
-			$('<div class="youtube-embed__wrapper" style="position:fixed;">' + iframeHtml + '</div>').appendTo('#left-side-menu-fixed-wrapper');
-			repositionYoutubeEmbed();
-		} else {
-			$('<div class="youtube-embed__wrapper" style="">' + iframeHtml + '</div>').insertAfter('#game-player-info, #replay-player-info');
-		}
-	}
-
-	function repositionYoutubeEmbed() {
-		let newTop = $('#game-player-info, #replay-player-info').height() + $('#left-side-profile-menu').height() + 170;
-		$('.youtube-embed__wrapper').css('top', newTop + 'px');
-	}
-
-	// Youtube Link
-
-    function getYoutubeLinkUrl(coName) {
-		let coData = getCoData().find(data => data.name === coName);
-		return coData.youtubeUrl;
-    }
-
-    function getYoutubeLinkHtml(linkUrl) {
-		const linkText = '&#119136; PLAY CO MUSIC IN NEW TAB &#119136;';
-		if (userConfig.rearrangeLayout) {
-			return '<div class="youtube-link__wrapper youtube-link__wrapper--fixed"><a target="_blank" href="' + linkUrl + '">' + linkText + '</a></div>';
-		} else {
-			return '<div class="youtube-link__wrapper"><a target="_blank" href="' + linkUrl + '">' + linkText + '</a></div>';
-		}
-    }
-
-    function addActiveCoMusicLinkToPage() {
-        if (!currentlyOnGamePage()) return;
-		let currentGameInfo = getCurrentGameInfo();
-		
-		if (!currentGameInfo.activeCoName) return;
-
-		let linkUrl = getYoutubeLinkUrl(currentGameInfo.activeCoName);
-        let linkHtml = getYoutubeLinkHtml(linkUrl);
-
-		if (userConfig.rearrangeLayout) {
-			$(linkHtml).appendTo('#left-side-menu-fixed-wrapper');
-			repositionYoutubeLink();
-		} else {
-			$(linkHtml).insertAfter('#game-player-info, #replay-player-info');
-		}
-    }
-
-	function repositionYoutubeLink() {
-		let newTop = $('#game-player-info, #replay-player-info').height() + $('#left-side-profile-menu').height() + 170;
-		$('.youtube-link__wrapper').css('top', newTop + 'px');
-	}
-
-	if (userConfig.embedMusicVideo) {
-		addActiveCoMusicVideoToPage();
-	}
-
-	if (userConfig.embedMusicLink) {
-		addActiveCoMusicLinkToPage();
-	}
+	// Embed youtube music link for active CO's theme
+	youtubeModule.init();
 
 	// ================================================================================
 	// Zoom the map using nearest neighbor instead of... bilinear? Whatever it was before.
@@ -107,7 +31,7 @@ const cssLoader = require('./loaders/thick/cssLoader');
 	// ================================================================================
 
 	function rearrangeLayout() {
-        if (!currentlyOnGamePage()) return;
+        if (!gameDataHelper.currentlyOnGamePage()) return;
 
 		$('#outer').css({
 			'margin': '0 auto',
@@ -162,10 +86,10 @@ const cssLoader = require('./loaders/thick/cssLoader');
 		$('#game-footer').css('display', 'none');
 
 		if (userConfig.embedMusicVideo) {
-			repositionYoutubeEmbed();
+			youtubeModule.repositionYoutubeEmbed();
 		}
 		if (userConfig.embedMusicLink) {
-			repositionYoutubeLink();
+			youtubeModule.repositionYoutubeLink();
 		}
 	}
 
@@ -227,7 +151,7 @@ const cssLoader = require('./loaders/thick/cssLoader');
             'margin-top': '10px'
         });
 
-        if (currentlyOnGamesCompletedPage()) {
+        if (gameDataHelper.currentlyOnGamesCompletedPage()) {
             $('.co-icon--dead').css({
                 'margin-left': '16px'
             });
@@ -250,7 +174,7 @@ const cssLoader = require('./loaders/thick/cssLoader');
 	// Change the maximum zoom
 	// ================================================================================
 
-	if (userConfig.rearrangeLayout && currentlyOnGamePage()) {
+	if (userConfig.rearrangeLayout && gameDataHelper.currentlyOnGamePage()) {
 		// Overwrite this function to use the new max zoom value.
 		// Some variables, like this function itself, are global (i.e. attached to window).
 		window.scaleAdd = function(n) {
@@ -298,42 +222,9 @@ const cssLoader = require('./loaders/thick/cssLoader');
 		};
 	}
 
-	if (userConfig.rearrangeLayout && currentlyOnGamePage()) {
+	if (userConfig.rearrangeLayout && gameDataHelper.currentlyOnGamePage()) {
 		// Force the layout changes
 		scaleAdd(0);
 	}
-
-	// ================================================================================
-	// Utility functions
-	// ================================================================================
-	
-	function getCurrentGameInfo() {
-		return {
-			activeCo: getActiveCo()
-		};
-	}
-	
-	function getActiveCo() {
-		// Example: https://awbw.amarriner.com/terrain/aw2/dskindle.png
-        let activeCoImage = $('#showplayers').find('td.borderblue a[href^="co.php"] img');
-		
-		if (!activeCoImage || activeCoImage.length < 1) {
-			return null;
-		}
-		
-		let filePath = activeCoImage.attr('src').split('/');
-		let fileName = filePath[filePath.length - 1];
-		let coName = (fileName.split('.')[0]).substr(2);
-
-		return coName;
-	}
-
-    function currentlyOnGamePage() {
-        return window.location.href.indexOf('game.php') > -1 || window.location.href.indexOf('replay.php') > -1;
-    }
-
-    function currentlyOnGamesCompletedPage() {
-        return window.location.href.indexOf('gamescompleted.php') > -1;
-    }
 
 })();

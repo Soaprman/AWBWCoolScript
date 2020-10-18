@@ -7,8 +7,8 @@ function getConfig() {
     // Merge saved config into default config, to ensure new functionality gets added if not already present
     let mergedConfig = Object.assign(defaultConfig, config);
 
-    // Might want to move this out later once the config panel is done
-    writeConfigToStorage(mergedConfig);
+    // In case I need to test save/load before the panel is done
+    // writeConfigToStorage(mergedConfig);
 
     return mergedConfig;
 }
