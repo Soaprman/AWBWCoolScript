@@ -1,6 +1,6 @@
 function getCurrentGameInfo() {
     return {
-        activeCo: getActiveCo()
+        activeCoName: getActiveCo()
     };
 }
 
