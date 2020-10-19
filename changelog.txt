@@ -1,7 +1,7 @@
 2.0.0 - October 19, 2020
     * Create a fancy development enviornment and overhaul how the script is built
     * Save configuration in browser local storage so it no longer gets overwritten by new script versions
-    * Fix bug with map zoom resizing on fog of war maps (probably a timing issue)
+    * Fix bug with map zoom resizing on fog of war maps
     * Fix zoom/rearrange not working on move planner
     * Move replay log to left side when rearranging layout
 1.1.4 - October 16, 2020
