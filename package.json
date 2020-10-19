@@ -1,6 +1,6 @@
 {
   "name": "awbw2",
-  "version": "2.0.1",
+  "version": "2.0.1-alpha",
   "description": "Userscript for Advance Wars By Web",
   "main": "index.js",
   "scripts": {
