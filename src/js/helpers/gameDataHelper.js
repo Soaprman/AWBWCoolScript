@@ -20,7 +20,9 @@ function getActiveCo() {
 }
 
 function currentlyOnGamePage() {
-    return window.location.href.indexOf('game.php') > -1 || window.location.href.indexOf('replay.php') > -1;
+    return window.location.href.indexOf('game.php') > -1 
+        || window.location.href.indexOf('replay.php') > -1 
+        || window.location.href.indexOf('moveplanner.php') > -1;
 }
 
 function currentlyOnGamesCompletedPage() {
