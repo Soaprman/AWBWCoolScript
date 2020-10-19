@@ -77,7 +77,9 @@ const youtubeModule = require('./modules/youtubeModule');
 		$('.replay-log-container').css({
 			'top': $('#left-side-menu-container').height() + $('#game-player-info, #replay-player-info').height() + 150 + 'px',
 			'position': 'fixed',
-			'width': '550px'
+			'width': '550px',
+			'height': '500px',
+			'overflow': 'auto'
 		});
 
         if (userConfig.rearrange1080pFriendly) {
