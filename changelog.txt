@@ -1,3 +1,5 @@
+2.0.1 - October 19, 2020
+    * Change the default URLs to a different domain
 2.0.0 - October 19, 2020
     * Create a fancy development enviornment and overhaul how the script is built
     * Save configuration in browser local storage so it no longer gets overwritten by new script versions

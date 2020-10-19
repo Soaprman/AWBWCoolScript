@@ -18,7 +18,7 @@ function getConfig() {
 // 1 = Japanese default (Olaf, Grit, Sonja only)
 // 2 = Alternate (everyone but Sturm)
 // 3 = Japanese alternate (Olaf, Sonja only)
-// Spritesheet is at https://thedailypos.org/misc/awportraits.png if you want to see them
+// Spritesheet is at https://soaprman.net/r/awbw/awportraits.png if you want to see them
 function getDefaultConfig() {
     return {
         embedMusicLink: true,
@@ -27,7 +27,7 @@ function getDefaultConfig() {
         rearrange1080pFriendly: true,
         crispyZoom: true,
         useAlternatePortraits: true,
-        spritesheetUrl: 'https://thedailypos.org/misc/awportraits.png',
+        spritesheetUrl: 'https://soaprman.net/r/awbw/awportraits.png',
         maxZoom: 3.0,
         coData: [
 			{name: 'andy', youtubeUrl: 'https://www.youtube.com/watch?v=JdRuVBhZuGY#t=0', portraitIndex: 4, costumeIndex: 2},
