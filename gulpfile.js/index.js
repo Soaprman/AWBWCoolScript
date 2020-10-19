@@ -12,6 +12,7 @@ const browserify = require('browserify');
 // Custom stuff
 const prependChangelog = require('./transforms/prependChangelog');
 const prependUserscriptHeader = require('./transforms/prependUserscriptHeader');
+const package = require('../package.json');
 
 sass.compiler = require('node-sass');
 
@@ -31,7 +32,7 @@ gulp.task('styles', gulp.series('sass'));
 gulp.task('buildThickScript', function () {
     return browserify('./src/js/thick.js')
         .bundle()
-        .pipe(stream('AWBWCoolScript-Thick.js'))
+        .pipe(stream(`AWBWCoolScript-Thick-${package.version}.js`))
         .pipe(transform('utf8', prependChangelog))
         .pipe(transform('utf8', prependUserscriptHeader))
         .pipe(gulp.dest('output'));
