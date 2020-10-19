@@ -42,6 +42,11 @@ const youtubeModule = require('./modules/youtubeModule');
 			'background': 'transparent'
 		});
 		$('#game-player-info, #replay-player-info').appendTo('#left-side-menu-fixed-wrapper');
+
+		$('#replay-container > table')
+			.addClass('replay-log-container')
+			.appendTo('#left-side-menu-fixed-wrapper');
+
 		$('#left-side-menu-fixed-wrapper').css({
 			'left': '0',
 			'margin': '0 20px',
@@ -66,6 +71,11 @@ const youtubeModule = require('./modules/youtubeModule');
 		});
 		$('#game-player-info, #replay-player-info').css({
 			'top': $('#left-side-menu-container').height() + 100 + 'px',
+			'position': 'fixed',
+			'width': '550px'
+		});
+		$('.replay-log-container').css({
+			'top': $('#left-side-menu-container').height() + $('#game-player-info, #replay-player-info').height() + 150 + 'px',
 			'position': 'fixed',
 			'width': '550px'
 		});

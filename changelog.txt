@@ -3,6 +3,7 @@
     * Save configuration in browser local storage so it no longer gets overwritten by new script versions
     * Fix bug with map zoom resizing on fog of war maps (probably a timing issue)
     * Fix zoom/rearrange not working on move planner
+    * Move replay log to left side when rearranging layout
 1.1.4 - October 16, 2020
     * Fix layout change not working on game replay pages
     * KNOWN ISSUE 2: Player data has horizontal scrollbar when viewing replay moves. Need to adjust columns or something
