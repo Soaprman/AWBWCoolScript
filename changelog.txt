@@ -6,7 +6,7 @@
     * Move replay log to left side when rearranging layout
 1.1.4 - October 16, 2020
     * Fix layout change not working on game replay pages
-    * KNOWN ISSUE 2: Player data has horizontal scrollbar when viewing replay moves. Need to adjust columns or something
+    * KNOWN ISSUE: Player data has horizontal scrollbar when viewing replay moves. Need to adjust columns or something
 1.1.3 - October 16, 2020
     * Fix error when running script on game replay pages
 1.1.2 - October 7, 2020
