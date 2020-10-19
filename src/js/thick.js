@@ -94,7 +94,10 @@ const youtubeModule = require('./modules/youtubeModule');
 	}
 
 	if (userConfig.rearrangeLayout) {
-		rearrangeLayout();
+		// The delay is a hack to account for the built-in loading delay when loading fog maps
+		window.setTimeout(function () {
+			rearrangeLayout();
+		}, 1000);
 	}
 
 	// ================================================================================
@@ -190,9 +193,13 @@ const youtubeModule = require('./modules/youtubeModule');
 				zoomLevel.textContent = scale.toFixed(1) + "x";
 			}
 
-			new_width = parseInt(map.width) * scale;
+			// Former is for game.php, latter is for replay.php I think
+			let mapWidth = window.mapwidth ? window.mapwidth : map.width;
+			let mapHeight = window.mapheight ? window.mapheight : map.height;
 
-			scaled_height = 1500 * (map.height / map.width);
+			new_width = parseInt(mapWidth) * scale;
+
+			scaled_height = 1500 * (mapHeight / mapWidth);
 
 			applyCSS(gamemapContainer, {
 				height: (document.documentElement.clientHeight - document.getElementById('fixed-header-wrapper').clientHeight - 170) + "px",
