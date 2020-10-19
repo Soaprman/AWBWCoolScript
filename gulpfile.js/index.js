@@ -33,7 +33,7 @@ gulp.task('buildThickScript', function () {
     // TODO: Add Thick to the filename after implementing Thin
     return browserify('./src/js/thick.js')
         .bundle()
-        .pipe(stream(`AWBWCoolScript-${package.version}.js`))
+        .pipe(stream(`AWBWCoolScript-${package.version}.user.js`))
         .pipe(transform('utf8', prependChangelog))
         .pipe(transform('utf8', prependUserscriptHeader))
         .pipe(gulp.dest('output'));
