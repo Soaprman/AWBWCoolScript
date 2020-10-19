@@ -78,9 +78,10 @@ const youtubeModule = require('./modules/youtubeModule');
 			'top': $('#left-side-menu-container').height() + $('#game-player-info, #replay-player-info').height() + 150 + 'px',
 			'position': 'fixed',
 			'width': '550px',
-			'height': '500px',
-			'overflow': 'auto'
 		});
+		$('#logs').css({
+			'height': '500px'
+		})
 
         if (userConfig.rearrange1080pFriendly) {
             $('#game-player-info, #replay-player-info').css({
