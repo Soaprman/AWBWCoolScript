@@ -22,6 +22,8 @@
     * Made spritesheet URL configurable
     * Fixed lots of issues with portrait displays
 
-KNOWN ISSUES:
+KNOWN ISSUES - MAY OR MAY NOT EVER FIX:
 * Player data has horizontal scrollbar when viewing replay moves. Need to adjust columns or something
 * Portrait swap bugs out if Advance Wars DS is not chosen as the portrait theme in your AWBW settings
+* Unit/property recolor does not work on replay or move planner
+* Unit/property recolor does not affect info popups

@@ -3,23 +3,24 @@ const gameDataHelper = require('../helpers/gameDataHelper');
 
 const userConfig = configRepository.getConfig();
 
+// The order is how they are prioritized when reassigning colors
 const countries = [
     { countryCode: 'os', name: 'orangestar' },
     { countryCode: 'bm', name: 'bluemoon' },
     { countryCode: 'ge', name: 'greenearth' },
     { countryCode: 'yc', name: 'yellowcomet' },
     { countryCode: 'bh', name: 'blackhole' },
-    { countryCode: 'rf', name: 'redfire' },
-    { countryCode: 'gs', name: 'greysky' },
-    { countryCode: 'bd', name: 'browndesert' },
     { countryCode: 'ab', name: 'amberblaze' },
-    { countryCode: 'js', name: 'jadesun' },
-    { countryCode: 'ci', name: 'cobaltice' },
-    { countryCode: 'pc', name: 'pinkcosmos' },
-    { countryCode: 'tg', name: 'tealgalaxy' },
     { countryCode: 'pl', name: 'purplelightning' },
+    { countryCode: 'tg', name: 'tealgalaxy' },
     { countryCode: 'ar', name: 'acidrain' },
+    { countryCode: 'bd', name: 'browndesert' },
+    { countryCode: 'pc', name: 'pinkcosmos' },
+    { countryCode: 'rf', name: 'redfire' },
+    { countryCode: 'ci', name: 'cobaltice' },
     { countryCode: 'wn', name: 'whitenova' },
+    { countryCode: 'js', name: 'jadesun' },
+    { countryCode: 'gs', name: 'greysky' },
 ];
 
 exports.init = function () {
@@ -29,6 +30,7 @@ exports.init = function () {
 
     recolorUnitSprites();
     recolorPropertySprites();
+    recolorPlayerInfoSprites();
 };
 
 function recolorUnitSprites() {
@@ -38,6 +40,8 @@ function recolorUnitSprites() {
     // https://awbw.amarriner.com/terrain/ani/gs_geinfantry.gif (Unit has moved already)
 
     let swapMatrix = getSwapMatrix();
+    if (swapMatrix.length === 0) return;
+
     let sprites = $('span[id^="unit_"] > img');
 
     $(sprites).each(function () {
@@ -71,6 +75,8 @@ function recolorPropertySprites() {
     // https://awbw.amarriner.com/terrain/aw2/neutralcity.gif
 
     let swapMatrix = getSwapMatrix();
+    if (swapMatrix.length === 0) return;
+
     let sprites = $('span.s > img');
 
     let countryNamesRegex = new RegExp(countries.map(x => x.name).join('|'), 'g');
@@ -104,6 +110,31 @@ function recolorPropertySprites() {
 
         $this.attr('src', src.replace('playerIndex' + playerIndex, countryName));
     });
+}
+
+function recolorPlayerInfoSprites() {
+    // Example URLs:
+    // https://awbw.amarriner.com/terrain/aw2/gs_cilogo.gif
+
+    let swapMatrix = getSwapMatrix();
+    if (swapMatrix.length === 0) return;
+
+    let countryLogoImages = $('#showplayers img[src*="logo.gif"]');
+
+    for (let i = 0; i < countryLogoImages.length; i++) {
+        let $image = $(countryLogoImages[i]);
+        let src = $image.attr('src');
+        let srcArray = src.split('/');
+        let fileName = srcArray[srcArray.length - 1];
+        let grayedOut = fileName.substr(0, 3) === 'gs_';
+        let countryPrefix = grayedOut ? fileName.substr(0, 5) : fileName.substr(0, 2);
+        let countryCode = grayedOut ? fileName.substr(3, 2) : fileName.substr(0, 2);
+
+        let playerIndex = swapMatrix.find(x => x.fromCountryCode === countryCode).playerIndex;
+        let toCountryCode = swapMatrix.find(x => x.playerIndex === playerIndex).toCountryCode;
+
+        $image.attr('src', src.replace('/' + countryPrefix, '/' + countryPrefix.replace(countryCode, toCountryCode)));
+    }
 }
 
 function getSwapMatrix() {
