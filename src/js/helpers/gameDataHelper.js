@@ -1,6 +1,7 @@
 function getCurrentGameInfo() {
     return {
-        activeCoName: getActiveCo()
+        activeCoName: getActiveCo(),
+        players: getPlayers()
     };
 }
 
@@ -27,6 +28,23 @@ function currentlyOnGamePage() {
 
 function currentlyOnGamesCompletedPage() {
     return window.location.href.indexOf('gamescompleted.php') > -1;
+}
+
+function getPlayers() {
+    let players = [];
+
+    // TODO: Add support on replay.php maybe
+    if (playersInfo) {
+        // Global variable on game.php and moveplanner.php
+        for (let prop in playersInfo) {
+            players.push({
+                userName: playersInfo[prop].users_username,
+                countryCode: playersInfo[prop].countries_code,
+            })
+        }
+    }
+
+    return players;
 }
 
 exports.getCurrentGameInfo = getCurrentGameInfo;

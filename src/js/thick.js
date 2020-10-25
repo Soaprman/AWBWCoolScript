@@ -2,6 +2,7 @@ const configRepository = require('./dataAccess/configRepository');
 const cssLoader = require('./loaders/thick/cssLoader');
 const gameDataHelper = require('./helpers/gameDataHelper');
 
+const spriteReplacementModule = require('./modules/spriteReplacementModule');
 const youtubeModule = require('./modules/youtubeModule');
 
 (function() {
@@ -17,6 +18,9 @@ const youtubeModule = require('./modules/youtubeModule');
 
 	// Embed youtube music link for active CO's theme
 	youtubeModule.init();
+
+	// Perform sprite replacement (just units for now)
+	spriteReplacementModule.init();
 
 	// ================================================================================
 	// Zoom the map using nearest neighbor instead of... bilinear? Whatever it was before.

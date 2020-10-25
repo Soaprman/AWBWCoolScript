@@ -1,3 +1,5 @@
+2.1.0 - October 25, 2020
+    * Add ability to recolor all countries to reduce the chance of visually similar choices
 2.0.1 - October 19, 2020
     * Change the default URLs to a different domain
 2.0.0 - October 19, 2020
@@ -8,7 +10,6 @@
     * Move replay log to left side when rearranging layout
 1.1.4 - October 16, 2020
     * Fix layout change not working on game replay pages
-    * KNOWN ISSUE: Player data has horizontal scrollbar when viewing replay moves. Need to adjust columns or something
 1.1.3 - October 16, 2020
     * Fix error when running script on game replay pages
 1.1.2 - October 7, 2020
@@ -20,3 +21,7 @@
     * Changed youtube music from an embed to a link because the embed has issues with page reloads
     * Made spritesheet URL configurable
     * Fixed lots of issues with portrait displays
+
+KNOWN ISSUES:
+* Player data has horizontal scrollbar when viewing replay moves. Need to adjust columns or something
+* Portrait swap bugs out if Advance Wars DS is not chosen as the portrait theme in your AWBW settings
