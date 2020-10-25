@@ -32,16 +32,20 @@ function currentlyOnGamesCompletedPage() {
 
 function getPlayers() {
     let players = [];
+    let playerProfileLinks = $('#showplayers a[href^="profile.php"]');
 
-    // TODO: Add support on replay.php maybe
-    if (playersInfo) {
-        // Global variable on game.php and moveplanner.php
-        for (let prop in playersInfo) {
-            players.push({
-                userName: playersInfo[prop].users_username,
-                countryCode: playersInfo[prop].countries_code,
-            })
-        }
+    for (let i = 0; i < playerProfileLinks.length; i++) {
+        let $link = $(playerProfileLinks[i]);
+        let countryImg = $link.parent().find('img[src*="logo.gif"]');
+        let src = $(countryImg).attr('src');
+        let srcArray = src.split('/');
+        let fileName = srcArray[srcArray.length - 1];
+        let countryCode = fileName.substr(0, 2);
+
+        players.push({
+            userName: $link.text(),
+            countryCode: countryCode,
+        });
     }
 
     return players;
