@@ -13,6 +13,10 @@ function getConfig() {
     return mergedConfig;
 }
 
+function saveConfig(userConfig) {
+	writeConfigToStorage(userConfig);
+}
+
 // Change costumeIndex if you want to.
 // 0 = Default
 // 1 = Japanese default (Olaf, Grit, Sonja only)
@@ -29,7 +33,7 @@ function getDefaultConfig() {
         useAlternatePortraits: true,
         spritesheetUrl: 'https://soaprman.net/r/awbw/awportraits.png',
 		maxZoom: 3.0,
-		recolorCountries: true,
+		recolorCountries: false,
         coData: [
 			{name: 'andy', youtubeUrl: 'https://www.youtube.com/watch?v=JdRuVBhZuGY#t=0', portraitIndex: 4, costumeIndex: 2},
 			{name: 'hachi', youtubeUrl: 'https://www.youtube.com/watch?v=Q7jTW7Ks9Yw#t=0', portraitIndex: 3, costumeIndex: 2},
@@ -63,8 +67,8 @@ function getDefaultConfig() {
     };
 }
 
-function writeConfigToStorage(config) {
-    window.localStorage.setItem(LocalStorageConfigKey, JSON.stringify(config));
+function writeConfigToStorage(userConfig) {
+    window.localStorage.setItem(LocalStorageConfigKey, JSON.stringify(userConfig));
 }
 
 function readConfigFromStorage() {
@@ -72,3 +76,4 @@ function readConfigFromStorage() {
 }
 
 exports.getConfig = getConfig;
+exports.saveConfig = saveConfig;
