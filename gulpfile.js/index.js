@@ -1,5 +1,6 @@
 // Gulp
 const gulp = require('gulp');
+const fileInclude = require('gulp-file-include');
 const stream = require('vinyl-source-stream');
 const transform = require('gulp-transform');
 
@@ -10,6 +11,8 @@ const sass = require('gulp-sass');
 const browserify = require('browserify');
 
 // Custom stuff
+const injectCss = require('./transforms/injectCss');
+const injectHtml = require('./transforms/injectHtml');
 const prependChangelog = require('./transforms/prependChangelog');
 const prependUserscriptHeader = require('./transforms/prependUserscriptHeader');
 const package = require('../package.json');
@@ -26,8 +29,16 @@ gulp.task('sass:watch', function () {
     gulp.watch('./scss/**/*.scss', ['sass']);
 });
 
-gulp.task('styles', gulp.series('sass'));
+gulp.task('buildCss', gulp.series('sass'));
 
+gulp.task('buildHtml', function () {
+    return gulp.src('src/html/index.html')
+        .pipe(fileInclude({
+            prefix: '@@',
+            basepath: '@file'
+        }))
+        .pipe(gulp.dest('output'));
+});
 
 gulp.task('buildThickScript', function () {
     // TODO: Add Thick to the filename after implementing Thin
@@ -39,7 +50,14 @@ gulp.task('buildThickScript', function () {
         .pipe(gulp.dest('output'));
 });
 
+gulp.task('injectCssAndHtml', function () {
+    return gulp.src(`output/AWBWCoolScript-${package.version}.user.js`)
+        .pipe(transform('utf8', injectCss))
+        .pipe(transform('utf8', injectHtml))
+        .pipe(gulp.dest('output'));
+});
 
 
-gulp.task('default', gulp.parallel('styles', 'buildThickScript'));
+
+gulp.task('default', gulp.series(gulp.parallel('buildCss', 'buildHtml', 'buildThickScript'), 'injectCssAndHtml'));
 

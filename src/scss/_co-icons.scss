@@ -1,0 +1,18 @@
+.co-icon {
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    border: 1px black solid;
+    margin: 2px 2px 2px 0;
+    //background-image: url("${userConfig.spritesheetUrl}"); // Set in JS
+}
+
+.co-icon--small {
+    transform: scale(0.5);
+    margin: -12px;
+}
+
+.co-icon--dead {
+    filter: brightness(70%) grayscale(50%);
+    background-color: #ccc;
+}

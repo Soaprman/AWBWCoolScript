@@ -1,5 +1,6 @@
 const configRepository = require('./dataAccess/configRepository');
 const cssLoader = require('./loaders/thick/cssLoader');
+const htmlLoader = require('./loaders/thick/htmlLoader');
 const gameDataHelper = require('./helpers/gameDataHelper');
 
 const spriteReplacementModule = require('./modules/spriteReplacementModule');
@@ -11,6 +12,7 @@ const youtubeModule = require('./modules/youtubeModule');
 	let userConfig = configRepository.getConfig();
 
 	cssLoader.addStylesToPage();
+	htmlLoader.addHtmlToPage();
 
 	function getCoData() {
 		return userConfig.coData;
