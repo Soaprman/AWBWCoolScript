@@ -23,6 +23,9 @@ const countries = [
     { countryCode: 'gs', name: 'greysky' },
 ];
 
+/**
+ * @description Perform sprite replacement
+ */
 exports.init = function () {
     if (!userConfig.recolorCountries) {
         return;

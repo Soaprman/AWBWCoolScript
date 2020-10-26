@@ -3,6 +3,9 @@ const gameDataHelper = require('../helpers/gameDataHelper');
 
 const userConfig = configRepository.getConfig();
 
+/**
+ * @description Embed youtube music link for active CO's theme
+ */
 exports.init = function () {
     // Deprecated - works poorly when the page refreshes after every action!
     if (userConfig.embedMusicVideo) {

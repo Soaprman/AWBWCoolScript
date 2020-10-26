@@ -1,3 +1,5 @@
+2.2.0 - October 26, 2020
+    * Add UI for editing userscript configuration
 2.1.0 - October 25, 2020
     * Add ability to recolor all countries to reduce the chance of visually similar choices
 2.0.1 - October 19, 2020

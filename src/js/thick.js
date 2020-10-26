@@ -3,6 +3,7 @@ const cssLoader = require('./loaders/thick/cssLoader');
 const htmlLoader = require('./loaders/thick/htmlLoader');
 const gameDataHelper = require('./helpers/gameDataHelper');
 
+const configModule = require('./modules/configModule');
 const spriteReplacementModule = require('./modules/spriteReplacementModule');
 const youtubeModule = require('./modules/youtubeModule');
 
@@ -18,11 +19,9 @@ const youtubeModule = require('./modules/youtubeModule');
 		return userConfig.coData;
 	}
 
-	// Embed youtube music link for active CO's theme
 	youtubeModule.init();
-
-	// Perform sprite replacement (just units for now)
 	spriteReplacementModule.init();
+	configModule.init();
 
 	// ================================================================================
 	// Zoom the map using nearest neighbor instead of... bilinear? Whatever it was before.
