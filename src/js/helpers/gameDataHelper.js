@@ -40,7 +40,8 @@ function getPlayers() {
         let src = $(countryImg).attr('src');
         let srcArray = src.split('/');
         let fileName = srcArray[srcArray.length - 1];
-        let countryCode = fileName.substr(0, 2);
+        let grayedOut = fileName.substr(0, 3) === 'gs_';
+        let countryCode = grayedOut ? fileName.substr(3, 2) : fileName.substr(0, 2);
 
         players.push({
             userName: $link.text(),
