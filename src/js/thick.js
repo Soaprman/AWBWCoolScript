@@ -1,6 +1,7 @@
 const configRepository = require('./dataAccess/configRepository');
 const cssLoader = require('./loaders/thick/cssLoader');
 const htmlLoader = require('./loaders/thick/htmlLoader');
+const devHelper = require('./helpers/devHelper');
 const gameDataHelper = require('./helpers/gameDataHelper');
 
 const configModule = require('./modules/configModule');
@@ -22,6 +23,9 @@ const youtubeModule = require('./modules/youtubeModule');
 	youtubeModule.init();
 	spriteReplacementModule.init();
 	configModule.init();
+
+	// Expose stuff for dev porpoises
+	window.devHelper = devHelper;
 
 	// ================================================================================
 	// Zoom the map using nearest neighbor instead of... bilinear? Whatever it was before.

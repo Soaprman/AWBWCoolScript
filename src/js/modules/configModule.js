@@ -7,6 +7,7 @@ let userConfig;
  * @description Add a configuration UI and a button to access it
  */
 exports.init = function () {
+    populateCoConfig();
     bindEvents();
     extractAndShowConfigButton();
     extractConfigPanel();
@@ -63,4 +64,48 @@ function showConfigPanel() {
 
 function hideConfigPanel() {
     $('.cs-config-wrapper').removeClass('visible');
+}
+
+function populateCoConfig() {
+    userConfig = configRepository.getConfig();
+
+    $('.cs-config-row__co-config').empty();
+
+    for (let i = 0; i < userConfig.coData.length; i++) {
+        let coData = userConfig.coData[i];
+
+        let row = $(document.querySelector('#cs-config-co').content.cloneNode(true));
+        
+        row.find('.cs-config-co__name').text(coData.name);
+        row.find('.cs-config-co__youtube-url input').val(coData.youtubeUrl);
+
+        for (let j = 0; j < 8; j++) {
+            row.find('.co-icon')
+                .eq(j)
+                .addClass(j === coData.costumeIndex ? 'selected' : null)
+                .on('click', selectCoPortrait)
+                .data('portraitIndex', i)
+                .data('costumeIndex', j)
+                .css({
+                    'background-position': '-' + (coData.portraitIndex * 48) + 'px -' + (j * 48) + 'px',
+                });
+        }
+
+        $('.cs-config-row__co-config').append(row);
+    }
+}
+
+function selectCoPortrait(e) {
+    userConfig = configRepository.getConfig();
+
+    let portraitIndex = $(this).data('portraitIndex');
+    let costumeIndex = $(this).data('costumeIndex');
+
+    let coData = userConfig.coData.find(x => x.portraitIndex === portraitIndex);
+    coData.costumeIndex = costumeIndex;
+
+    $(this).closest('.cs-config-co__portraits').find('.co-icon').removeClass('selected');
+    $(this).addClass('selected');
+
+    configRepository.saveConfig(userConfig);
 }
