@@ -75,7 +75,8 @@
         cursor: pointer;
 
         &.selected {
-            outline: 2px red solid;
+            outline: 2px #33f solid;
+            background-color: #ccf;
         }
     }
 }
