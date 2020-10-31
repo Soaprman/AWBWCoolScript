@@ -119,7 +119,15 @@ function populateCoConfig() {
         let row = $(document.querySelector('#cs-config-co').content.cloneNode(true));
         
         row.find('.cs-config-co__name').text(coData.name);
-        row.find('.cs-config-co__youtube-url input').val(coData.youtubeUrl);
+
+        row.find('.cs-config-co__youtube-url input')
+            .val(coData.youtubeUrl)
+            .data('portraitIndex', i)
+            .on('change', function () {
+                userConfig = configRepository.getConfig();
+                userConfig.coData.find(x => x.portraitIndex == Number($(this).data('portraitIndex'))).youtubeUrl = $(this).val();
+                configRepository.saveConfig(userConfig);
+            });
 
         for (let j = 0; j < 8; j++) {
             row.find('.co-icon')
