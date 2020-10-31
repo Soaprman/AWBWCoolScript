@@ -9,11 +9,11 @@
 
     position: fixed;
     width: 1000px;
-    height: 800px;
+    height: 720px;
     box-sizing: border-box;
     padding: 1em;
-    left: calc(50% - 400px);
-    top: 200px;
+    left: calc(50% - 500px);
+    top: 100px;
     z-index: 1000; // Arbitrary choice but seems to work
 
     background-color: #e0e0e0;
@@ -21,10 +21,16 @@
     color: black;
 }
 
+.cs-config-h2 {
+    margin: 0 0 0.5em 0;
+}
+
 .cs-config-row {
+    box-sizing: border-box;
     display: flex;
     width: 100%;
     margin-bottom: 1em;
+    padding: 0.5em;
 
     flex-wrap: wrap;
     justify-content: space-between;
@@ -35,7 +41,6 @@
 .cs-config-row__co-config {
     height: 400px;
     overflow: auto;
-    padding: 0.25em;
 }
 
 .cs-config-row__co-spritesheet-config {
@@ -48,8 +53,6 @@
     box-sizing: border-box;
     padding: 0.25em;
     width: 48%;
-
-    border: 1px black solid;
 }
 
 .cs-config-co {

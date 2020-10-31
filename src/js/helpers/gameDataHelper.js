@@ -6,6 +6,8 @@ function getCurrentGameInfo() {
 }
 
 function getActiveCo() {
+    // Example: https://awbw.amarriner.com/terrain/aw2/nell.png
+    // Example: https://awbw.amarriner.com/terrain/aw2/aw2nell.png
     // Example: https://awbw.amarriner.com/terrain/aw2/dskindle.png
     let activeCoImage = $('#showplayers').find('td.borderblue a[href^="co.php"] img');
     
@@ -15,7 +17,16 @@ function getActiveCo() {
     
     let filePath = activeCoImage.attr('src').split('/');
     let fileName = filePath[filePath.length - 1];
-    let coName = (fileName.split('.')[0]).substr(2);
+    let fileNameWithoutExt = (fileName.split('.')[0]);
+    let coName = null;
+    
+    if (fileNameWithoutExt.substr(0, 3) === 'aw2') {
+        coName = fileNameWithoutExt.substr(3);
+    } else if (fileNameWithoutExt.substr(0, 2) === 'ds') {
+        coName = fileNameWithoutExt.substr(2);
+    } else {
+        coName = fileNameWithoutExt;
+    }
 
     return coName;
 }

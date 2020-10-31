@@ -26,6 +26,41 @@ function bindEvents() {
         restoreDefaultConfig();
         loadConfig();
     });
+
+    bindAutosaveEvents();
+}
+
+function bindAutosaveEvents() {
+    $('input[name="embedMusicLink"]').on('click', function () {
+        userConfig = configRepository.getConfig();
+        userConfig.embedMusicLink = $(this).prop('checked');
+        configRepository.saveConfig(userConfig);
+    });
+    $('input[name="rearrangeLayout"]').on('click', function () {
+        userConfig = configRepository.getConfig();
+        userConfig.rearrangeLayout = $(this).prop('checked');
+        configRepository.saveConfig(userConfig);
+    });
+    $('input[name="crispyZoom"]').on('click', function () {
+        userConfig = configRepository.getConfig();
+        userConfig.crispyZoom = $(this).prop('checked');
+        configRepository.saveConfig(userConfig);
+    });
+    $('input[name="recolorCountries"]').on('click', function () {
+        userConfig = configRepository.getConfig();
+        userConfig.recolorCountries = $(this).prop('checked');
+        configRepository.saveConfig(userConfig);
+    });
+    $('input[name="useAlternatePortraits"]').on('click', function () {
+        userConfig = configRepository.getConfig();
+        userConfig.useAlternatePortraits = $(this).prop('checked');
+        configRepository.saveConfig(userConfig);
+    });
+    $('input[name="spritesheetUrl"]').on('change', function () {
+        userConfig = configRepository.getConfig();
+        userConfig.spritesheetUrl = $(this).val();
+        configRepository.saveConfig(userConfig);
+    });
 }
 
 function loadConfig() {
@@ -118,6 +153,9 @@ function selectCoPortrait(e) {
 }
 
 function restoreDefaultConfig() {
-    let defaultConfig = configRepository.getDefaultConfig();
-    configRepository.saveConfig(defaultConfig);
+    let yesImSure = confirm('Restoring default settings. Are you sure?');
+    if (yesImSure) {
+        let defaultConfig = configRepository.getDefaultConfig();
+        configRepository.saveConfig(defaultConfig);
+    }
 }
