@@ -1,5 +1,9 @@
 .cs-configbutton-wrapper {
     @include module-wrapper;
 
-    
+    margin-left: 5px;    
+}
+
+.cs-configbutton-button {
+    height: 32px;
 }

@@ -1,5 +1,6 @@
-2.2.0 - October 26, 2020
+2.2.0 - October 30, 2020
     * Add UI for editing userscript configuration
+    * Fix bug loading page when non-AWDS portraits are selected in AWBW config
 2.1.0 - October 25, 2020
     * Add ability to recolor all countries to reduce the chance of visually similar choices
 2.0.1 - October 19, 2020
@@ -26,7 +27,6 @@
 
 KNOWN ISSUES - MAY OR MAY NOT EVER FIX:
 * Player data has horizontal scrollbar when viewing replay moves. Need to adjust columns or something
-* Portrait swap bugs out if Advance Wars DS is not chosen as the portrait theme in your AWBW settings
 * Unit/property recolor does not work on replay or move planner
 * Unit/property recolor does not affect info popups
 * CO music link doesn't show up under some config combinations (rearrangeLayout = false?)
