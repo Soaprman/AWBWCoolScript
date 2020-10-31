@@ -7,7 +7,6 @@ let userConfig;
  * @description Add a configuration UI and a button to access it
  */
 exports.init = function () {
-    populateCoConfig();
     bindEvents();
     extractAndShowConfigButton();
     extractConfigPanel();
@@ -23,8 +22,10 @@ function bindEvents() {
         saveConfig();
         hideConfigPanel();
     });
-
-
+    $('.cs-config-restoredefaultsbutton').on('click', function () {
+        restoreDefaultConfig();
+        loadConfig();
+    });
 }
 
 function loadConfig() {
@@ -35,6 +36,10 @@ function loadConfig() {
     $('input[name="crispyZoom"]').prop('checked', userConfig.crispyZoom);
     $('input[name="recolorCountries"]').prop('checked', userConfig.recolorCountries);
     $('input[name="useAlternatePortraits"]').prop('checked', userConfig.useAlternatePortraits);
+
+    $('input[name="spritesheetUrl"]').val(userConfig.spritesheetUrl);
+
+    populateCoConfig();
 }
 
 function saveConfig() {
@@ -45,6 +50,8 @@ function saveConfig() {
     userConfig.crispyZoom = $('input[name="crispyZoom"]').prop('checked');
     userConfig.recolorCountries = $('input[name="recolorCountries"]').prop('checked');
     userConfig.useAlternatePortraits = $('input[name="useAlternatePortraits"]').prop('checked');
+
+    userConfig.spritesheetUrl = $('input[name="spritesheetUrl"]').val();
 
     configRepository.saveConfig(userConfig);
 }
@@ -108,4 +115,9 @@ function selectCoPortrait(e) {
     $(this).addClass('selected');
 
     configRepository.saveConfig(userConfig);
+}
+
+function restoreDefaultConfig() {
+    let defaultConfig = configRepository.getDefaultConfig();
+    configRepository.saveConfig(defaultConfig);
 }

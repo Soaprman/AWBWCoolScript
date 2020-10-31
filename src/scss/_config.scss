@@ -9,7 +9,7 @@
 
     position: fixed;
     width: 1000px;
-    height: 600px;
+    height: 800px;
     box-sizing: border-box;
     padding: 1em;
     left: calc(50% - 400px);
@@ -24,6 +24,7 @@
 .cs-config-row {
     display: flex;
     width: 100%;
+    margin-bottom: 1em;
 
     flex-wrap: wrap;
     justify-content: space-between;
@@ -34,8 +35,13 @@
 .cs-config-row__co-config {
     height: 400px;
     overflow: auto;
-    margin: 1em 0;
     padding: 0.25em;
+}
+
+.cs-config-row__co-spritesheet-config {
+    input {
+        width: 400px;
+    }
 }
 
 .cs-config-field-wrapper {
