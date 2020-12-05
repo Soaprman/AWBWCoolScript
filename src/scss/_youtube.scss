@@ -1,4 +1,8 @@
-.youtube-link__wrapper {
+.youtube-embed-wrapper {
+    margin-top: 1em;
+}
+
+.youtube-link-wrapper {
     width: 530px;
     height: 40px;
     text-align: center;
@@ -8,10 +12,10 @@
     box-shadow: 0 5px 10px 5px rgba(0, 0, 0, 0.4);
 }
 
-.youtube-link__wrapper a {
+.youtube-link-wrapper a {
     color: #0066CC;
 }
 
-.youtube-link__wrapper--fixed {
+.youtube-link-wrapper--fixed {
     position: fixed;
 }

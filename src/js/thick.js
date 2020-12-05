@@ -5,6 +5,7 @@ const devHelper = require('./helpers/devHelper');
 const gameDataHelper = require('./helpers/gameDataHelper');
 
 const configModule = require('./modules/configModule');
+const pageLayoutModule = require('./modules/pageLayoutModule');
 const spriteReplacementModule = require('./modules/spriteReplacementModule');
 const youtubeModule = require('./modules/youtubeModule');
 
@@ -21,19 +22,12 @@ const youtubeModule = require('./modules/youtubeModule');
 	}
 
 	youtubeModule.init();
+	pageLayoutModule.init();
 	spriteReplacementModule.init();
 	configModule.init();
 
 	// Expose stuff for dev porpoises
 	window.devHelper = devHelper;
-
-	// ================================================================================
-	// Zoom the map using nearest neighbor instead of... bilinear? Whatever it was before.
-	// ================================================================================
-
-	if (userConfig.crispyZoom) {
-		$('#gamemap').css('image-rendering', 'pixelated');
-	}
 
 	// ================================================================================
 	// Rearrange the page layout
@@ -125,7 +119,7 @@ const youtubeModule = require('./modules/youtubeModule');
 		}
 	}
 
-	if (userConfig.rearrangeLayout) {
+	if (userConfig.rearrangeLayout && !gameDataHelper.currentlyOnRefreshlessGamePage()) {
 		// The delay is a hack to account for the built-in loading delay when loading fog maps
 		window.setTimeout(function () {
 			rearrangeLayout();
@@ -179,7 +173,7 @@ const youtubeModule = require('./modules/youtubeModule');
         $('.do-game-username').css({
             'top': '18px'
 		});
-		if (gameDataHelper.currentlyOnRefreshlessGamePage()) {
+		if (gameDataHelper.currentlyOnRefreshlessGamePage() && !userConfig.rearrangeLayout) {
 			$('#game-menu-controls').css({
 				'height': '100px'
 			});
@@ -208,10 +202,6 @@ const youtubeModule = require('./modules/youtubeModule');
 		}
     }
 
-    function bindPortraitResizeEventHandlers() {
-        $('.calculator-toggle').on('click', applyAlternatePortraits);
-    }
-
     if (userConfig.useAlternatePortraits) {
         applyAlternatePortraits();
         resizePortraitWrappers();
@@ -221,7 +211,7 @@ const youtubeModule = require('./modules/youtubeModule');
 	// Change the maximum zoom
 	// ================================================================================
 
-	if (userConfig.rearrangeLayout && gameDataHelper.currentlyOnGamePage()) {
+	if (userConfig.rearrangeLayout && gameDataHelper.currentlyOnGamePage() && !gameDataHelper.currentlyOnRefreshlessGamePage()) {
 		// Overwrite this function to use the new max zoom value.
 		// Some variables, like this function itself, are global (i.e. attached to window).
 		window.scaleAdd = function(n) {
@@ -273,7 +263,7 @@ const youtubeModule = require('./modules/youtubeModule');
 		};
 	}
 
-	if (userConfig.rearrangeLayout && gameDataHelper.currentlyOnGamePage()) {
+	if (userConfig.rearrangeLayout && gameDataHelper.currentlyOnGamePage() && !gameDataHelper.currentlyOnRefreshlessGamePage()) {
 		// Force the layout changes
 		scaleAdd(0);
 	}

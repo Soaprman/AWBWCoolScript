@@ -4,15 +4,15 @@
     <div class="cs-config-row">
         <div class="cs-config-field-wrapper">
             <label>
-                <input type="checkbox" name="embedMusicLink"/>
-                Embed active CO music link
+                <input type="checkbox" name="embedMusic"/>
+                Embed active CO music (Direct embed on refreshless, new tab link otherwise)
             </label>
         </div>
 
         <div class="cs-config-field-wrapper">
             <label>
                 <input type="checkbox" name="rearrangeLayout"/>
-                Rearrange game page layout to put some stuff on the left, and set max zoom level to 3.0
+                Rearrange game page layout to move some stuff to the sides, and set max zoom level to 3.0. On refreshless, player info is always right-docked.
             </label>
         </div>
 
@@ -34,6 +34,20 @@
             <label>
                 <input type="checkbox" name="useAlternatePortraits"/>
                 Use alternate CO portraits (only works if AWDS portraits are selected in the AWBW config)
+            </label>
+        </div>
+
+        <div class="cs-config-field-wrapper">
+            <label>
+                <input type="checkbox" name="arrangePlayerOverviewAsRows"/>
+                (Refreshless) Arrange player overviews as rows instead of columns - only applies if not using rearrange layout
+            </label>
+        </div>
+
+        <div class="cs-config-field-wrapper">
+            <label>
+                <input type="checkbox" name="disableCoBarAnimation"/>
+                (Refreshless) Disable CO bar animation in ALL cases (this script already disables it for dead COs)
             </label>
         </div>
     </div>

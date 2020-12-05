@@ -2,10 +2,13 @@ const LocalStorageConfigKey = 'awbwUserscriptConfig';
 
 function getConfig() {
     let defaultConfig = getDefaultConfig();
-    let config = readConfigFromStorage() || {};
+	let storedConfig = readConfigFromStorage() || {};
+	
+	// One-way migration of old values to new values, where applicable
+	let migratedConfig = migrateConfigValues(storedConfig);
 
     // Merge saved config into default config, to ensure new functionality gets added if not already present
-    let mergedConfig = Object.assign(defaultConfig, config);
+    let mergedConfig = Object.assign(defaultConfig, migratedConfig);
 
     // In case I need to test save/load before the panel is done
     // writeConfigToStorage(mergedConfig);
@@ -25,8 +28,7 @@ function saveConfig(userConfig) {
 // Spritesheet is at https://soaprman.net/r/awbw/awportraits.png if you want to see them
 function getDefaultConfig() {
     return {
-        embedMusicLink: true,
-        embedMusicVideo: false,
+        embedMusic: true,
         rearrangeLayout: true,
         rearrange1080pFriendly: true,
         crispyZoom: true,
@@ -34,6 +36,8 @@ function getDefaultConfig() {
         spritesheetUrl: 'https://soaprman.net/r/awbw/awportraits.png',
 		maxZoom: 3.0,
 		recolorCountries: false,
+		arrangePlayerOverviewAsRows: false,
+		disableCoBarAnimation: false,
         coData: [
 			{name: 'jake', youtubeUrl: 'https://www.youtube.com/watch?v=T8lEWH5WBfY#t=0', portraitIndex: 0, costumeIndex: 1},
 			{name: 'rachel', youtubeUrl: 'https://www.youtube.com/watch?v=y80cfL409Xg#t=0', portraitIndex: 1, costumeIndex: 1},
@@ -73,6 +77,17 @@ function writeConfigToStorage(userConfig) {
 
 function readConfigFromStorage() {
     return JSON.parse(window.localStorage.getItem(LocalStorageConfigKey));
+}
+
+function migrateConfigValues(userConfig) {
+	// 2.4.0 - Combine music settings and use code to decide which to use
+	if (typeof userConfig.embedMusicLink !== 'undefined' || typeof userConfig.embedMusic === 'undefined') {
+		userConfig.embedMusic = userConfig.embedMusicLink;
+		delete userConfig.embedMusicLink;
+		delete userConfig.embedMusicVideo;
+	}
+
+	return userConfig;
 }
 
 exports.getConfig = getConfig;

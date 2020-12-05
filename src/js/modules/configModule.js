@@ -31,9 +31,9 @@ function bindEvents() {
 }
 
 function bindAutosaveEvents() {
-    $('input[name="embedMusicLink"]').on('click', function () {
+    $('input[name="embedMusic"]').on('click', function () {
         userConfig = configRepository.getConfig();
-        userConfig.embedMusicLink = $(this).prop('checked');
+        userConfig.embedMusic = $(this).prop('checked');
         configRepository.saveConfig(userConfig);
     });
     $('input[name="rearrangeLayout"]').on('click', function () {
@@ -56,6 +56,16 @@ function bindAutosaveEvents() {
         userConfig.useAlternatePortraits = $(this).prop('checked');
         configRepository.saveConfig(userConfig);
     });
+    $('input[name="arrangePlayerOverviewAsRows"]').on('click', function () {
+        userConfig = configRepository.getConfig();
+        userConfig.arrangePlayerOverviewAsRows = $(this).prop('checked');
+        configRepository.saveConfig(userConfig);
+    });
+    $('input[name="disableCoBarAnimation"]').on('click', function () {
+        userConfig = configRepository.getConfig();
+        userConfig.disableCoBarAnimation = $(this).prop('checked');
+        configRepository.saveConfig(userConfig);
+    });
     $('input[name="spritesheetUrl"]').on('change', function () {
         userConfig = configRepository.getConfig();
         userConfig.spritesheetUrl = $(this).val();
@@ -66,11 +76,13 @@ function bindAutosaveEvents() {
 function loadConfig() {
     userConfig = configRepository.getConfig();
 
-    $('input[name="embedMusicLink"]').prop('checked', userConfig.embedMusicLink);
+    $('input[name="embedMusic"]').prop('checked', userConfig.embedMusic);
     $('input[name="rearrangeLayout"]').prop('checked', userConfig.rearrangeLayout);
     $('input[name="crispyZoom"]').prop('checked', userConfig.crispyZoom);
     $('input[name="recolorCountries"]').prop('checked', userConfig.recolorCountries);
     $('input[name="useAlternatePortraits"]').prop('checked', userConfig.useAlternatePortraits);
+    $('input[name="arrangePlayerOverviewAsRows"]').prop('checked', userConfig.arrangePlayerOverviewAsRows);
+    $('input[name="disableCoBarAnimation"]').prop('checked', userConfig.disableCoBarAnimation);
 
     $('input[name="spritesheetUrl"]').val(userConfig.spritesheetUrl);
 
@@ -80,11 +92,13 @@ function loadConfig() {
 function saveConfig() {
     userConfig = configRepository.getConfig();
 
-    userConfig.embedMusicLink = $('input[name="embedMusicLink"]').prop('checked');
+    userConfig.embedMusic = $('input[name="embedMusic"]').prop('checked');
     userConfig.rearrangeLayout = $('input[name="rearrangeLayout"]').prop('checked');
     userConfig.crispyZoom = $('input[name="crispyZoom"]').prop('checked');
     userConfig.recolorCountries = $('input[name="recolorCountries"]').prop('checked');
     userConfig.useAlternatePortraits = $('input[name="useAlternatePortraits"]').prop('checked');
+    userConfig.arrangePlayerOverviewAsRows = $('input[name="arrangePlayerOverviewAsRows"]').prop('checked');
+    userConfig.disableCoBarAnimation = $('input[name="disableCoBarAnimation"]').prop('checked');
 
     userConfig.spritesheetUrl = $('input[name="spritesheetUrl"]').val();
 

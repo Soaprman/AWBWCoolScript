@@ -1,3 +1,9 @@
+2.4.0 - December 5, 2020
+    * Refactor page layout code to better integrate refreshless page
+    * Refreshless: Change Youtube music from link to embed
+    * Refreshless: Add option to arrange player info in rows instead of columns
+    * Refreshless: Disable CO bar animation for dead players
+    * Refreshless: Add option to disable CO bar animation in all cases
 2.3.0 - December 5, 2020
     * Make script fully compatible with 2030/Refreshless - bare minimum work, no feature changes
     * Known issue - layout change is still janky. Will refactor in detail in a future release.
