@@ -1,5 +1,6 @@
 2.3.0 - December 5, 2020
     * Make script fully compatible with 2030/Refreshless - bare minimum work, no feature changes
+    * Known issue - layout change is still janky. Will refactor in detail in a future release.
 2.2.1 - October 30, 2020
     * Make selected CO portraits stand out a little more
 2.2.0 - October 30, 2020
