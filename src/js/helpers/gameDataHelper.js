@@ -6,6 +6,10 @@ function getCurrentGameInfo() {
 }
 
 function getActiveCo() {
+    if (currentlyOnRefreshlessGamePage()) {
+        return getActiveCoRefreshless();
+    }
+
     // Example: https://awbw.amarriner.com/terrain/aw2/nell.png
     // Example: https://awbw.amarriner.com/terrain/aw2/aw2nell.png
     // Example: https://awbw.amarriner.com/terrain/aw2/dskindle.png
@@ -31,10 +35,23 @@ function getActiveCo() {
     return coName;
 }
 
+function getActiveCoRefreshless() {
+    let currentTurnArrow = $('.player-overview-container .current-turn-arrow');
+    let playerOverview = currentTurnArrow.closest('.player-overview');
+    let coLink = playerOverview.find('.player-co');
+    let coName = coLink.attr('href').split('#')[1];
+    return coName;
+}
+
 function currentlyOnGamePage() {
     return window.location.href.indexOf('game.php') > -1 
         || window.location.href.indexOf('replay.php') > -1 
+        || window.location.href.indexOf('2030.php') > -1 
         || window.location.href.indexOf('moveplanner.php') > -1;
+}
+
+function currentlyOnRefreshlessGamePage() {
+    return window.location.href.indexOf('2030.php') > -1;
 }
 
 function currentlyOnGamesCompletedPage() {
@@ -42,6 +59,10 @@ function currentlyOnGamesCompletedPage() {
 }
 
 function getPlayers() {
+    if (currentlyOnRefreshlessGamePage()) {
+        return getPlayersRefreshless();
+    }
+
     let players = [];
     let playerProfileLinks = $('#showplayers a[href^="profile.php"]');
 
@@ -63,7 +84,33 @@ function getPlayers() {
     return players;
 }
 
+function getPlayersRefreshless() {
+    let players = [];
+    let playerOverviews = $('.player-overview');
+
+    for (let i = 0; i < playerOverviews.length; i++) {
+        let $playerOverview = $(playerOverviews[i]);
+
+        let userName = $playerOverview.find('.player-username a').text();
+
+        let countryImg = $playerOverview.find('.player-country-logo');
+        let src = $(countryImg).attr('src');
+        let srcArray = src.split('/');
+        let fileName = srcArray[srcArray.length - 1];
+        let grayedOut = fileName.substr(0, 3) === 'gs_';
+        let countryCode = grayedOut ? fileName.substr(3, 2) : fileName.substr(0, 2);
+
+        players.push({
+            userName: userName,
+            countryCode: countryCode,
+        });
+    }
+
+    return players;
+}
+
 exports.getCurrentGameInfo = getCurrentGameInfo;
 exports.getActiveCo = getActiveCo;
 exports.currentlyOnGamePage = currentlyOnGamePage;
+exports.currentlyOnRefreshlessGamePage = currentlyOnRefreshlessGamePage;
 exports.currentlyOnGamesCompletedPage = currentlyOnGamesCompletedPage;

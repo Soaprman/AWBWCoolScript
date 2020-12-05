@@ -39,12 +39,24 @@ function addActiveCoMusicVideoToPage() {
         $('<div class="youtube-embed__wrapper" style="position:fixed;">' + iframeHtml + '</div>').appendTo('#left-side-menu-fixed-wrapper');
         repositionYoutubeEmbed();
     } else {
-        $('<div class="youtube-embed__wrapper" style="">' + iframeHtml + '</div>').insertAfter('#game-player-info, #replay-player-info');
+        if (gameDataHelper.currentlyOnRefreshlessGamePage()) {
+            $('<div class="youtube-embed__wrapper" style="">' + iframeHtml + '</div>').insertAfter('.game-player-info, .replay-player-info');
+        } else {
+            $('<div class="youtube-embed__wrapper" style="">' + iframeHtml + '</div>').insertAfter('#game-player-info, #replay-player-info');
+        }
     }
 }
 
 function repositionYoutubeEmbed() {
-    let newTop = $('#game-player-info, #replay-player-info').height() + $('#left-side-profile-menu').height() + 170;
+    let newTop;
+
+    if (gameDataHelper.currentlyOnRefreshlessGamePage()) {
+        newTop = $('.game-player-info, .replay-player-info').height() + $('#left-side-profile-menu').height() + 170;
+    } else {
+        newTop = $('#game-player-info, #replay-player-info').height() + $('#left-side-profile-menu').height() + 170;
+    }
+
+    
     $('.youtube-embed__wrapper').css('top', newTop + 'px');
 }
 
@@ -75,12 +87,23 @@ function addActiveCoMusicLinkToPage() {
         $(linkHtml).appendTo('#left-side-menu-fixed-wrapper');
         repositionYoutubeLink();
     } else {
-        $(linkHtml).insertAfter('#game-player-info, #replay-player-info');
+        if (gameDataHelper.currentlyOnRefreshlessGamePage()) {
+            $(linkHtml).insertAfter('.game-player-info, .replay-player-info');
+        } else {
+            $(linkHtml).insertAfter('#game-player-info, #replay-player-info');
+        }
     }
 }
 
 function repositionYoutubeLink() {
-    let newTop = $('#game-player-info, #replay-player-info').height() + $('#left-side-profile-menu').height() + 170;
+    let newTop;
+    
+    if (gameDataHelper.currentlyOnRefreshlessGamePage()) {
+        newTop = $('.game-player-info, .replay-player-info').height() + $('#left-side-profile-menu').height() + 170;
+    } else {
+        newTop = $('#game-player-info, #replay-player-info').height() + $('#left-side-profile-menu').height() + 170;
+    }
+    
     $('.youtube-link__wrapper').css('top', newTop + 'px');
 }
 

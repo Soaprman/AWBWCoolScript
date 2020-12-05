@@ -40,7 +40,15 @@ const youtubeModule = require('./modules/youtubeModule');
 	// ================================================================================
 
 	function rearrangeLayout() {
-        if (!gameDataHelper.currentlyOnGamePage()) return;
+		if (!gameDataHelper.currentlyOnGamePage()) return;
+		
+		let playerInfoSelector = '';
+
+		if (gameDataHelper.currentlyOnRefreshlessGamePage()) {
+			playerInfoSelector = '.game-player-info, .replay-player-info';
+		} else {
+			playerInfoSelector = '#game-player-info, #replay-player-info';
+		}
 
 		$('#outer').css({
 			'margin': '0 auto',
@@ -50,7 +58,8 @@ const youtubeModule = require('./modules/youtubeModule');
 			'display': 'flex',
 			'background': 'transparent'
 		});
-		$('#game-player-info, #replay-player-info').appendTo('#left-side-menu-fixed-wrapper');
+		
+		$(playerInfoSelector).appendTo('#left-side-menu-fixed-wrapper');
 
 		$('#replay-container > table')
 			.addClass('replay-log-container')
@@ -78,13 +87,14 @@ const youtubeModule = require('./modules/youtubeModule');
 		$('#left-side-menu-container').css({
 			'width': '530px'
 		});
-		$('#game-player-info, #replay-player-info').css({
+		
+		$(playerInfoSelector).css({
 			'top': $('#left-side-menu-container').height() + 100 + 'px',
 			'position': 'fixed',
 			'width': '550px'
 		});
 		$('.replay-log-container').css({
-			'top': $('#left-side-menu-container').height() + $('#game-player-info, #replay-player-info').height() + 150 + 'px',
+			'top': $('#left-side-menu-container').height() + $(playerInfoSelector).height() + 150 + 'px',
 			'position': 'fixed',
 			'width': '550px',
 		});
@@ -93,7 +103,7 @@ const youtubeModule = require('./modules/youtubeModule');
 		})
 
         if (userConfig.rearrange1080pFriendly) {
-            $('#game-player-info, #replay-player-info').css({
+            $(playerInfoSelector).css({
                 'max-height': '550px',
                 'overflow': 'auto'
             });
@@ -168,10 +178,16 @@ const youtubeModule = require('./modules/youtubeModule');
         });
         $('.do-game-username').css({
             'top': '18px'
-        });
-        $('#game-menu-controls').css({
-            'height': '32px'
-        });
+		});
+		if (gameDataHelper.currentlyOnRefreshlessGamePage()) {
+			$('#game-menu-controls').css({
+				'height': '100px'
+			});
+		} else {
+			$('#game-menu-controls').css({
+				'height': '32px'
+			});
+		}
         $('#do-game-row-container .game-tools-btn').css({
             'margin-top': '10px'
         });
@@ -183,7 +199,13 @@ const youtubeModule = require('./modules/youtubeModule');
             $('.do-game-co-image img').css({
                 'margin-bottom': '48px'
             });
-        }
+		}
+		
+		if (gameDataHelper.currentlyOnRefreshlessGamePage()) {
+			$('.game-player-info, .replay-player-info').css({
+				'width': '100%'
+			});
+		}
     }
 
     function bindPortraitResizeEventHandlers() {

@@ -45,7 +45,12 @@ function recolorUnitSprites() {
     let swapMatrix = getSwapMatrix();
     if (swapMatrix.length === 0) return;
 
-    let sprites = $('span[id^="unit_"] > img');
+    let sprites;
+    if (gameDataHelper.currentlyOnRefreshlessGamePage()) {
+        sprites = $('.game-unit > img.sprite');
+    } else {
+        sprites = $('span[id^="unit_"] > img');
+    }
 
     $(sprites).each(function () {
         let $this = $(this);
@@ -80,7 +85,12 @@ function recolorPropertySprites() {
     let swapMatrix = getSwapMatrix();
     if (swapMatrix.length === 0) return;
 
-    let sprites = $('span.s > img');
+    let sprites;
+    if (gameDataHelper.currentlyOnRefreshlessGamePage()) {
+        sprites = $('.game-building > img');
+    } else {
+        sprites = $('span.s > img');
+    }
 
     let countryNamesRegex = new RegExp(countries.map(x => x.name).join('|'), 'g');
 
