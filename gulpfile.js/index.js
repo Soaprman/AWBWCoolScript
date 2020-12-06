@@ -1,3 +1,5 @@
+const axios = require('axios').default;
+
 // Gulp
 const gulp = require('gulp');
 const fileInclude = require('gulp-file-include');
@@ -16,8 +18,15 @@ const injectHtml = require('./transforms/injectHtml');
 const prependChangelog = require('./transforms/prependChangelog');
 const prependUserscriptHeader = require('./transforms/prependUserscriptHeader');
 const package = require('../package.json');
+let githubInfo;
 
 sass.compiler = require('node-sass');
+
+gulp.task('getGithubInfo', async function () {
+    let latestReleaseUrl = package.github.latestReleaseUrl;
+    let response = await axios.get(latestReleaseUrl);
+    githubInfo = response.data;
+});
 
 gulp.task('sass', function () {
     return gulp.src('src/scss/**/*.scss')
@@ -44,20 +53,18 @@ gulp.task('buildThickScript', function () {
     // TODO: Add Thick to the filename after implementing Thin
     return browserify('./src/js/thick.js')
         .bundle()
-        .pipe(stream(`AWBWCoolScript-${package.version}.user.js`))
+        .pipe(stream(`AWBWCoolScript-${githubInfo.tag_name}.user.js`))
         .pipe(transform('utf8', prependChangelog))
         .pipe(transform('utf8', prependUserscriptHeader))
         .pipe(gulp.dest('output'));
 });
 
 gulp.task('injectCssAndHtml', function () {
-    return gulp.src(`output/AWBWCoolScript-${package.version}.user.js`)
+    return gulp.src(`output/AWBWCoolScript-${githubInfo.tag_name}.user.js`)
         .pipe(transform('utf8', injectCss))
         .pipe(transform('utf8', injectHtml))
         .pipe(gulp.dest('output'));
 });
 
-
-
-gulp.task('default', gulp.series(gulp.parallel('buildCss', 'buildHtml', 'buildThickScript'), 'injectCssAndHtml'));
+gulp.task('default', gulp.series('getGithubInfo', gulp.parallel('buildCss', 'buildHtml', 'buildThickScript'), 'injectCssAndHtml'));
 

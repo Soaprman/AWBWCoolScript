@@ -1,11 +1,14 @@
+const axios = require('axios').default;
 const package = require('../../package.json');
 
-module.exports = function (content, file) {
+module.exports = async function (content, file) {
+    let githubInfo = await getGithubInfo();
+
     let userscriptHeader = 
 `// ==UserScript==
 // @name         ${package.userscriptHeader.name}
 // @namespace    ${package.userscriptHeader.namespace}
-// @version      ${package.version}
+// @version      ${githubInfo.tag_name}
 // @description  ${package.userscriptHeader.description}
 // @author       ${package.author}
 // @match        ${package.userscriptHeader.match}
@@ -18,3 +21,10 @@ module.exports = function (content, file) {
 
     return userscriptHeader + content;
 };
+
+async function getGithubInfo() {
+    let latestReleaseUrl = package.github.latestReleaseUrl;
+    let response = await axios.get(latestReleaseUrl);
+    return response.data;
+}
+

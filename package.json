@@ -9,6 +9,7 @@
   "author": "Soaprman",
   "license": "ISC",
   "devDependencies": {
+    "axios": "^0.21.0",
     "browserify": "^17.0.0",
     "gulp": "^4.0.2",
     "gulp-file-include": "^2.2.2",
@@ -30,5 +31,9 @@
     "icon": "https://soaprman.net/r/awbw/awtank.png",
     "requireJquery": "https://code.jquery.com/jquery-3.5.1.min.js",
     "grant": "none"
-  }
+  },
+  "github": {
+    "latestReleaseUrl": "https://api.github.com/repos/Soaprman/AWBWCoolScript/releases/latest"
+  },
+  "dependencies": {}
 }
