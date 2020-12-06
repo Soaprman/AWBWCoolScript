@@ -1,3 +1,5 @@
+3.0.0 - Coming Soon
+    * Create a GitHub repo for this project
 2.4.0 - December 5, 2020
     * Refactor page layout code to better integrate refreshless page
     * Refreshless: Change Youtube music from link to embed
