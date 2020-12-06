@@ -41,3 +41,4 @@ KNOWN ISSUES - MAY OR MAY NOT EVER FIX:
 * Unit/property recolor does not work on replay or move planner
 * Unit/property recolor does not affect info popups
 * CO music link doesn't show up under some config combinations (rearrangeLayout = false?)
+* Tag COs appear weird on refreshless when replacing portraits
