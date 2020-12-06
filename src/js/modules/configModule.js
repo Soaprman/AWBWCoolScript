@@ -1,4 +1,5 @@
 const configRepository = require('../dataAccess/configRepository');
+const githubRepository = require('../dataAccess/githubRepository');
 const gameDataHelper = require('../helpers/gameDataHelper');
 
 let userConfig;
