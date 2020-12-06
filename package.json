@@ -33,6 +33,7 @@
     "grant": "none"
   },
   "github": {
+    "repositoryUrl": "https://github.com/Soaprman/AWBWCoolScript",
     "latestReleaseUrl": "https://api.github.com/repos/Soaprman/AWBWCoolScript/releases/latest"
   },
   "dependencies": {}

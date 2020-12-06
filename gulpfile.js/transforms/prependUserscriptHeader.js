@@ -15,6 +15,7 @@ module.exports = async function (content, file) {
 // @icon         ${package.userscriptHeader.icon}
 // @require		 ${package.userscriptHeader.requireJquery}
 // @grant        ${package.userscriptHeader.grant}
+// @source       ${package.github.repositoryUrl}
 // ==/UserScript==
 
 `;
